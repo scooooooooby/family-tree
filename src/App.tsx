@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import UniqueUser from "./UniqueUser";
+import CurrentUser from "./CurrentUser";
 import Edit from "./Edit";
 
 function App() {
@@ -27,8 +28,11 @@ function App() {
   };
 
   const getUserName = (id) => {
-    console.log("Spouse ID: " + id);
-    console.log(data[id]);
+    let userName = "loading...";
+    if (data[id]) {
+      userName = data[id].name;
+    }
+    return userName;
   };
 
   useEffect(() => {
@@ -55,14 +59,16 @@ function App() {
             <p>Place of Birth: {user.hometown}</p>
             <p>Spouse: {getUserName(user.spouseId)}</p>
             <p>
-              Parents: {user.parentId1}, {user.parentId2}
+              Parents: {getUserName(user.parentId1)},{" "}
+              {getUserName(user.parentId2)}
             </p>
           </>
         ))}
 
         <Router>
-          <Link to="/user">user</Link>
+          <Link to="/user/:id">user</Link>
           <Routes>
+            <Route path="/" element={<CurrentUser />} />
             <Route path="/User" element={<UniqueUser userId={3} />} />
             <Route path="/Edit" element={<Edit userId={3} />} />
           </Routes>
