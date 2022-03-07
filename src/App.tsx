@@ -66,7 +66,6 @@ function App() {
         ))}
 
         <Router>
-          <Link to="/user/:id">user</Link>
           <Routes>
             <Route path="/" element={<CurrentUser />} />
             <Route path="/User" element={<UniqueUser userId={3} />} />
